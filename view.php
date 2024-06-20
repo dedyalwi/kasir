@@ -103,7 +103,6 @@ if(isset($_GET['idp'])){
                                             "SELECT * FROM detail_pesanan p, produk pr, pelanggan pl WHERE p.id_produk=pr.id_produk AND id_pesanan='$idp'"
                                         );
                                         $i=1;
-
                                         while ($ap = mysqli_fetch_array($get)) {
                                             $qty = $ap['qty'];
                                             $harga = $ap['harga'];
@@ -172,13 +171,13 @@ if(isset($_GET['idp'])){
             $deskripsi = $pr['deskripsi'];
 
         ?>
-        <option value="<?=$id_produk; ?>"> <?= $nama_produk; ?> - <?= $deskripsi; ?></option>
+        <option value="<?=$id_produk; ?>"> <?= $nama_produk; ?> - <?= $deskripsi; ?> - (Stock: <?=$stock;?>)</option>
         <?php    
         }
         
         ?>
         </select>
-        <input type="number" name="qty" class="form-control mt-3" placeholder="quantity" >
+        <input type="number" name="qty" class="form-control mt-3" placeholder="quantity" min="1" required >
         <input type="hidden" name="idp" value="<?= $idp;?>" >
       </div>
 

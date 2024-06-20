@@ -93,7 +93,7 @@ $h2 = mysqli_num_rows($barang);
                                             <td><?= $i; ?></td>
                                             <td><?= $brg['nama_produk'] ?></td>
                                             <td><?= $brg['deskripsi'] ?></td>
-                                            <td><?= $brg['harga'] ?></td>
+                                            <td>Rp.<?= number_format($brg['harga']) ?></td>
                                             <td><?= $brg['stock'] ?></td>
                                         </tr>
                                         <?php $i ++; ?>
