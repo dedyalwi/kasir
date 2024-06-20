@@ -1,5 +1,5 @@
 <?php
-require 'function.php';
+require 'ceklogin.php';
 
 
 if(isset($_GET['idp'])){
@@ -100,7 +100,7 @@ if(isset($_GET['idp'])){
                                     <?php
                                         $get = mysqli_query(
                                             $koneksi,
-                                            "SELECT * FROM detail_pesanan p, produk pr WHERE p.id_produk=pr.id_produk"
+                                            "SELECT * FROM detail_pesanan p, produk pr, pelanggan pl WHERE p.id_produk=pr.id_produk AND id_pesanan='$idp'"
                                         );
                                         $i=1;
 
@@ -114,9 +114,9 @@ if(isset($_GET['idp'])){
                                         <tr>
                                             <td><?= $i++; ?></td>                                            
                                             <td><?= $nama_produk; ?></td>
-                                            <td><?= $harga; ?></td>
-                                            <td><?= $qty; ?></td>
-                                            <td><?= $subtotal; ?></td>
+                                            <td>Rp.<?= number_format($harga); ?></td>
+                                            <td><?= number_format($qty); ?></td>
+                                            <td>Rp.<?= number_format($subtotal); ?></td>
                                             <td>Edit| Delete</td>
                                         </tr>
                                         <?php 
@@ -161,7 +161,9 @@ if(isset($_GET['idp'])){
         <select name="id_produk" class="form-control">
 
         <?php
-        $getproduk = mysqli_query($koneksi, "SELECT * FROM produk");
+        //untuk mencegah input add produk yg sama
+        $getproduk = mysqli_query($koneksi, 
+        "SELECT * FROM produk WHERE id_produk NOT IN(SELECT id_produk FROM detail_pesanan WHERE id_pesanan='$idp')");
 
         while($pr = mysqli_fetch_array($getproduk)){
             $id_produk = $pr['id_produk'];

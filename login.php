@@ -1,6 +1,13 @@
 <?php
 require 'function.php';
 
+if(!isset($_SESSION['login'])){
+    //belum login
+
+}else{
+    //sudah login
+    header('location:index.php');
+}
 ?>
 
 <!DOCTYPE html>

@@ -1,5 +1,10 @@
 <?php
-require 'function.php';
+require 'ceklogin.php';
+
+// hitung jumlah
+$h1 = mysqli_query($koneksi, "SELECT * FROM pesanan");
+$h2 = mysqli_num_rows($h1);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +64,7 @@ require 'function.php';
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-2">
-                                    <div class="card-body">Jumlah Pesanan: </div>
+                                    <div class="card-body">Jumlah Pesanan: <?= $h2;?> </div>
                                 </div>
                                 <div >
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
@@ -103,7 +108,7 @@ require 'function.php';
                                             <td><?= $tanggal; ?></td>
                                             <td><?= $nama_pelanggan; ?></td>
                                             <td><?= $alamat ?></td>
-                                            <td>Jumlah</td>
+                                            <td><?= $jumlah ?></td>
                                             <td><a href="view.php?idp= <?= $id_pesanan; ?>" class="btn btn-primary" target="_blank">Tampilkan</a> | Delete</td>
                                         </tr>
                                         <?php 

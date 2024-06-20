@@ -1,6 +1,8 @@
 <?php
-require 'function.php';
+require 'ceklogin.php';
 $pelanggan = mysqli_query($koneksi, "SELECT * FROM pelanggan");
+$h2 = mysqli_num_rows($pelanggan);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +62,7 @@ $pelanggan = mysqli_query($koneksi, "SELECT * FROM pelanggan");
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-2">
-                                    <div class="card-body">Jumlah Pelanggan : </div>
+                                    <div class="card-body">Jumlah Pelanggan : <?= $h2;?> </div>
                                 </div>
                                 <div >
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
