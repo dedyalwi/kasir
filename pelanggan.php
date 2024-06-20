@@ -1,6 +1,6 @@
 <?php
 require 'function.php';
-$barang = mysqli_query($koneksi, "SELECT * FROM produk");
+$pelanggan = mysqli_query($koneksi, "SELECT * FROM pelanggan");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,15 +56,15 @@ $barang = mysqli_query($koneksi, "SELECT * FROM produk");
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Stock Barang</h1>
+                        <h1 class="mt-4">Kelola Pelanggan</h1>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-2">
-                                    <div class="card-body">Jumlah Barang: </div>
+                                    <div class="card-body">Jumlah Pelanggan : </div>
                                 </div>
                                 <div >
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                                    Tambah Barang
+                                    Tambah Pelanggan
                                 </button>
                                 </div>
                             </div>
@@ -72,28 +72,28 @@ $barang = mysqli_query($koneksi, "SELECT * FROM produk");
                         <div class="card mt-3 mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Data Stock Barang
+                                Data Pelanggan
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Nama Produk</th>
-                                            <th>Deskripsi</th>
-                                            <th>Harga</th>
-                                            <th>Stock</th>
+                                            <th> No </th>
+                                            <th>Nama Pelanggan</th>
+                                            <th>No Telpon</th>
+                                            <th>Alamat</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        <?php foreach ($barang as $brg) : ?>
+                                        <?php foreach ($pelanggan as $pl) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
-                                            <td><?= $brg['nama_produk'] ?></td>
-                                            <td><?= $brg['deskripsi'] ?></td>
-                                            <td><?= $brg['harga'] ?></td>
-                                            <td><?= $brg['stock'] ?></td>
+                                            <td><?= $pl['nama_pelanggan']; ?></td>
+                                            <td><?= $pl['notelp']; ?></td>
+                                            <td><?= $pl['alamat']; ?></td>
+                                            <td>Edit|Delete</td>
                                         </tr>
                                         <?php $i ++; ?>
                                         <?php endforeach; ?>
@@ -126,21 +126,21 @@ $barang = mysqli_query($koneksi, "SELECT * FROM produk");
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Data Tambah Stock</h4>
+        <h4 class="modal-title">Data Tambah Pelanggan</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 <form method="POST">
       <!-- Modal body -->
       <div class="modal-body">
-        <input type="text" name="nama_produk" class="form-control mt-3" placeholder="nama produk" >
-        <input type="text" name="deskripsi" class="form-control mt-3" placeholder="deskripsi produk" >
-        <input type="num" name="harga" class="form-control mt-3" placeholder="harga" >
-        <input type="num" name="stock" class="form-control mt-3" placeholder="stock" >
+        <input type="text" name="nama_pelanggan" class="form-control mt-3" placeholder="nama pelanggan" >
+        <input type="text" name="notelp" class="form-control mt-3" placeholder="no telepon" >
+        <input type="num" name="alamat" class="form-control mt-3" placeholder="alamat" >
+        <!-- <input type="num" name="stock" class="form-control mt-3" placeholder="stock" > -->
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-success" name="tambahproduk">Simpan</button>
+        <button type="submit" class="btn btn-success" name="tambahpelanggan">Simpan</button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
       </div>
 
