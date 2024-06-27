@@ -109,8 +109,35 @@ $h2 = mysqli_num_rows($h1);
                                             <td><?= $nama_pelanggan; ?></td>
                                             <td><?= $alamat ?></td>
                                             <td><?= $jumlah ?></td>
-                                            <td><a href="view.php?idp= <?= $id_pesanan; ?>" class="btn btn-primary" target="_blank">Tampilkan</a> | Delete</td>
+                                            <td><a href="view.php?idp= <?= $id_pesanan; ?>" class="btn btn-primary" target="_blank">Tampilkan</a>  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $id_pesanan;?>">Delete</button></td>
                                         </tr>
+                                         <!--- Modal Delete Pesanan--->
+                                         <div class="modal" id="delete<?= $id_pesanan; ?>">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                             <h4 class="modal-title">Hapus Pesanan Nomor: <?= $p['id_pesanan']; ?></h4>
+                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                        <form method="POST">
+                                             <!-- Modal body -->
+                                            <div class="modal-body">
+                                              Apakah Anda Yakin Menghapus Pesanan Ini ?
+                                              <input type="hidden" name="id_pesanan" class="form-control mt-3" placeholder="harga" value="<?= $id_pesanan; ?>">
+                                                
+                                            </div>
+
+                                             <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success" name="hapuspesanan">Hapus</button>
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        </div>
                                         <?php 
                                             }; 
                                         ?>

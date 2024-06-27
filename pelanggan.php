@@ -1,7 +1,7 @@
 <?php
 require 'ceklogin.php';
-$pelanggan = mysqli_query($koneksi, "SELECT * FROM pelanggan");
-$h2 = mysqli_num_rows($pelanggan);
+$h1 = mysqli_query($koneksi, "SELECT * FROM pelanggan");
+$h2 = mysqli_num_rows($h1);
 
 ?>
 <!DOCTYPE html>
@@ -88,17 +88,27 @@ $h2 = mysqli_num_rows($pelanggan);
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $i = 1; ?>
-                                        <?php foreach ($pelanggan as $pl) : ?>
+                                        <?php
+                                        $getpelanggan = mysqli_query($koneksi,
+                                        "SELECT * FROM pelanggan");
+                                        $i = 1;
+                                        while ($pl = mysqli_fetch_array($getpelanggan)) {
+                                            $id_pelanggan = $pl['id_pelanggan'];
+                                            $nama_pelanggan = $pl['nama_pelanggan'];
+                                            $notelp = $pl['notelp'];
+                                            $alamat = $pl['alamat'];
+                                        
+                                        ?>         
                                         <tr>
                                             <td><?= $i; ?></td>
-                                            <td><?= $pl['nama_pelanggan']; ?></td>
-                                            <td><?= $pl['notelp']; ?></td>
-                                            <td><?= $pl['alamat']; ?></td>
-                                            <td>Edit|Delete</td>
+                                            <td><?= $nama_pelanggan; ?></td>
+                                            <td><?= $notelp; ?></td>
+                                            <td><?= $alamat; ?></td>
+                                            <td><button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $id_pelanggan;?>">Edit</button> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $id_pelanggan;?>">Delete</button></td>
                                         </tr>
                                         <?php $i ++; ?>
-                                        <?php endforeach; ?>
+                                        <?php } //end while 
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>

@@ -84,20 +84,92 @@ $h2 = mysqli_num_rows($barang);
                                             <th>Deskripsi</th>
                                             <th>Harga</th>
                                             <th>Stock</th>
+                                            <th>Edit|Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $i = 1; ?>
-                                        <?php foreach ($barang as $brg) : ?>
+                                        <?php 
+                                        $getbarang = mysqli_query(
+                                            $koneksi,
+                                            "SELECT * FROM produk ");
+                                        $i = 1;
+                                        while ($brg = mysqli_fetch_array($getbarang)) {
+                                            $np = $brg['nama_produk'];
+                                            $deskripsi = $brg['deskripsi'];
+                                            $harga = $brg['harga'];
+                                            $stock = $brg['stock'];
+                                            $id_produk = $brg['id_produk'];
+                                        ?>                            
+
                                         <tr>
-                                            <td><?= $i; ?></td>
-                                            <td><?= $brg['nama_produk'] ?></td>
-                                            <td><?= $brg['deskripsi'] ?></td>
-                                            <td>Rp.<?= number_format($brg['harga']) ?></td>
-                                            <td><?= $brg['stock'] ?></td>
+                                            <td><?= $i++; ?></td>
+                                            <td><?= $np; ?></td>
+                                            <td><?= $deskripsi; ?></td>
+                                            <td>Rp.<?= number_format($harga); ?></td>
+                                            <td><?= $stock; ?></td>
+                                            <td><button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $id_produk;?>">Edit</button> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $id_produk;?>">Delete</button></td>
                                         </tr>
-                                        <?php $i ++; ?>
-                                        <?php endforeach; ?>
+                                        <!--- Modal Edit--->
+                                        <div class="modal" id="edit<?= $id_produk;?>">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                             <h4 class="modal-title">Edit Barang</h4>
+                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                        <form method="POST">
+                                             <!-- Modal body -->
+                                            <div class="modal-body">
+                                              <input type="text" name="nama_produk" class="form-control mt-3" placeholder="nama produk" value="<?= $brg['nama_produk']; ?>">
+                                              <input type="text" name="deskripsi" class="form-control mt-3" placeholder="deskripsi produk" value="<?= $brg['deskripsi']; ?>">
+                                              <input type="num" name="harga" class="form-control mt-3" placeholder="harga" value="<?= number_format($brg['harga']); ?>">
+                                              <input type="hidden" name="id_produk" class="form-control mt-3" placeholder="harga" value="<?= $id_produk; ?>">
+                                                
+                                            </div>
+
+                                             <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success" name="editproduk">Simpan</button>
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        </div>
+
+                                        <!--- Modal Delete--->
+                                        <div class="modal" id="delete<?= $id_produk; ?>">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                             <h4 class="modal-title">Hapus Barang - <?= $brg['nama_produk']; ?></h4>
+                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                        <form method="POST">
+                                             <!-- Modal body -->
+                                            <div class="modal-body">
+                                              Apakah Anda Yakin Menghapus Barang Ini ?
+                                              <input type="hidden" name="id_produk" class="form-control mt-3" placeholder="harga" value="<?= $id_produk; ?>">
+                                                
+                                            </div>
+
+                                             <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success" name="hapusproduk">Hapus</button>
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <?php 
+                                         };  // end while
+                                          ?>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -121,6 +193,7 @@ $h2 = mysqli_num_rows($barang);
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
     </body>
+<!--- Modal  Tambah Produk --->
 <div class="modal" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">

@@ -9,6 +9,7 @@ if(isset($_GET['idp'])){
     "SELECT * FROM pesanan p, pelanggan pl WHERE p.id_pelanggan=pl.id_pelanggan AND p.id_pesanan='$idp'");
     $np = mysqli_fetch_array($ambilnamapelanggan);
     $namapel = $np['nama_pelanggan'];
+    $idpel = $np['id_pelanggan'];
 }else
 {
     header('location:index.php');
@@ -98,29 +99,61 @@ if(isset($_GET['idp'])){
                                     </thead>
                                     <tbody>
                                     <?php
-                                        $get = mysqli_query(
+                                        $getview = mysqli_query(
                                             $koneksi,
-                                            "SELECT * FROM detail_pesanan p, produk pr, pelanggan pl WHERE p.id_produk=pr.id_produk AND id_pesanan='$idp'"
+                                            "SELECT * FROM detail_pesanan p, produk pr, pelanggan pl WHERE p.id_produk=pr.id_produk AND id_pesanan='$idp' AND id_pelanggan='$idpel'"
                                         );
-                                        $i=1;
-                                        while ($ap = mysqli_fetch_array($get)) {
+                                        $i = 1;
+                                        while ($ap = mysqli_fetch_array($getview)) {
+                                            $idpr = $ap['id_produk'];
+                                            $iddetail = $ap['id_detailpesanan'];
+                                            $idp = $ap['id_pesanan'];
                                             $qty = $ap['qty'];
                                             $harga = $ap['harga'];
                                             $nama_produk = $ap['nama_produk'];
+                                            $deskripsi = $ap['deskripsi'];
                                             $subtotal = $qty * $harga;
-
                                         ?>
                                         <tr>
                                             <td><?= $i++; ?></td>                                            
-                                            <td><?= $nama_produk; ?></td>
+                                            <td><?= $nama_produk; ?> (<?= $deskripsi;?>)</td>
                                             <td>Rp.<?= number_format($harga); ?></td>
                                             <td><?= number_format($qty); ?></td>
                                             <td>Rp.<?= number_format($subtotal); ?></td>
-                                            <td>Edit| Delete</td>
+                                            <td>Edit|<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $iddetail;?>">Delete</button></td>
                                         </tr>
+                                         <!--- Modal Delete Detail Pesanan--->
+                                         <div class="modal" id="delete<?= $iddetail; ?>">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                             <h4 class="modal-title">Hapus Data Pesanan</h4>
+                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                        <form method="POST">
+                                             <!-- Modal body -->
+                                            <div class="modal-body">
+                                              Apakah Anda Yakin Menghapus Data Pesanan Ini ?
+                                              <input type="number" name="id_detailpesanan" class="form-control mt-3" placeholder="id detail pesanan" value="<?= $iddetail; ?>">
+                                                
+                                            </div>
+
+                                             <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success" name="hapusprodukpesanan">Hapus</button>
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                        
                                         <?php 
-                                            }; 
+                                            }; // end while
                                         ?>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -144,6 +177,9 @@ if(isset($_GET['idp'])){
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
     </body>
+
+  
+<!-- Modal Tambah Pesanan -->  
 <div class="modal" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
